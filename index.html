@@ -1,21 +1,21 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="bn">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>NameAura - What does your name say about you?</title>
-<meta name="description" content="Type your name and get a beautiful shareable card: your name's letter meaning, personality, hidden superpower and a funny truth.">
+<title>NameAura ✨ তোমার নাম কী বলছে?</title>
+<meta name="description" content="নাম লিখো, পাও সুন্দর শেয়ারেবল কার্ড: নামের অর্থ, পার্সোনালিটি, হিডেন সুপারপাওয়ার আর মজার সত্য।">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Hind+Siliguri:wght@400;500;600;700&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-body{font-family:'Poppins',sans-serif;background:linear-gradient(160deg,#1b1035 0%,#2d1b69 45%,#0f3461 100%);min-height:100vh;color:#fff;display:flex;flex-direction:column;align-items:center;padding:24px 16px 60px}
+body{font-family:'Hind Siliguri',sans-serif;background:linear-gradient(160deg,#1b1035 0%,#2d1b69 45%,#0f3461 100%);min-height:100vh;color:#fff;display:flex;flex-direction:column;align-items:center;padding:24px 16px 60px}
 .hero{text-align:center;margin-top:24px}
 .hero h1{font-family:'Fredoka',sans-serif;font-size:clamp(34px,8vw,54px);line-height:1.1;background:linear-gradient(90deg,#ffd86f,#fc8f5e,#ff6fb0,#8f7bff);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
-.hero p{margin-top:10px;color:#cfc8f5;font-size:15px}
+.hero p{margin-top:10px;color:#cfc8f5;font-size:16px}
 .card-input{margin-top:28px;display:flex;gap:10px;width:100%;max-width:440px}
-.card-input input{flex:1;padding:16px 20px;border-radius:16px;border:none;font-size:17px;font-family:'Poppins',sans-serif;background:rgba(255,255,255,.95);color:#222;outline:none;box-shadow:0 8px 30px rgba(0,0,0,.35)}
-.card-input button{padding:16px 22px;border:none;border-radius:16px;font-size:16px;font-weight:700;font-family:'Poppins',sans-serif;background:linear-gradient(90deg,#ff6fb0,#8f7bff);color:#fff;cursor:pointer;box-shadow:0 8px 30px rgba(143,123,255,.45);transition:transform .15s}
+.card-input input{flex:1;padding:16px 20px;border-radius:16px;border:none;font-size:17px;font-family:'Hind Siliguri',sans-serif;background:rgba(255,255,255,.95);color:#222;outline:none;box-shadow:0 8px 30px rgba(0,0,0,.35)}
+.card-input button{padding:16px 22px;border:none;border-radius:16px;font-size:16px;font-weight:700;font-family:'Hind Siliguri',sans-serif;background:linear-gradient(90deg,#ff6fb0,#8f7bff);color:#fff;cursor:pointer;box-shadow:0 8px 30px rgba(143,123,255,.45);transition:transform .15s}
 .card-input button:active{transform:scale(.96)}
 .hint{margin-top:12px;color:#9a8fd0;font-size:13px}
 .loader{display:none;margin-top:36px;text-align:center}
@@ -26,7 +26,7 @@ body{font-family:'Poppins',sans-serif;background:linear-gradient(160deg,#1b1035 
 #canvasWrap{border-radius:20px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.5)}
 canvas{width:100%;height:auto;display:block}
 .actions{display:flex;gap:12px;margin-top:20px}
-.actions button{flex:1;padding:16px 10px;border:none;border-radius:16px;font-size:15px;font-weight:700;font-family:'Poppins',sans-serif;cursor:pointer}
+.actions button{flex:1;padding:16px 10px;border:none;border-radius:16px;font-size:15px;font-weight:700;font-family:'Hind Siliguri',sans-serif;cursor:pointer}
 #shareBtn{background:linear-gradient(90deg,#22c55e,#16a34a);color:#fff}
 #dlBtn{background:rgba(255,255,255,.12);color:#fff}
 .again{margin-top:14px;color:#9a8fd0;font-size:14px;cursor:pointer;text-decoration:underline}
@@ -37,39 +37,39 @@ footer{margin-top:auto;padding-top:44px;color:#7f74b8;font-size:12px;text-align:
 <body>
 <div class="hero">
 <h1>✨ NameAura</h1>
-<p>What does YOUR name secretly say about you?</p>
+<p>তোমার নাম সম্পর্কে গোপন সত্য জানতে চাও?</p>
 </div>
 <div class="card-input">
-<input id="nameInput" placeholder="Type your name..." maxlength="20" autocomplete="off">
-<button onclick="go()">Reveal ✨</button>
+<input id="nameInput" placeholder="তোমার নাম লিখো..." maxlength="25" autocomplete="off">
+<button onclick="go()">দেখাও ✨</button>
 </div>
-<div class="hint">Free · No signup · Instant shareable card</div>
-<div class="loader" id="loader"><div class="spin"></div><p id="loadText">Reading the stars...</p></div>
+<div class="hint">ফ্রি · সাইনআপ লাগে না · সাথে সাথে শেয়ার করো</div>
+<div class="loader" id="loader"><div class="spin"></div><p id="loadText">তারা পড়া হচ্ছে...</p></div>
 <div id="result">
 <div id="canvasWrap"><canvas id="card" width="1080" height="1350"></canvas></div>
 <div class="actions">
-<button id="shareBtn" onclick="shareCard()">Share Card</button>
-<button id="dlBtn" onclick="downloadCard()">Download</button>
+<button id="shareBtn" onclick="shareCard()">কার্ড শেয়ার</button>
+<button id="dlBtn" onclick="downloadCard()">ডাউনলোড</button>
 </div>
-<div class="again" onclick="reset()">Try another name</div>
+<div class="again" onclick="reset()">আরেকটা নাম ট্রাই করো</div>
 </div>
-<footer>NameAura · your name, your story 💜</footer>
+<footer>NameAura · তোমার নাম, তোমার গল্প 💜</footer>
 <div class="toast" id="toast"></div>
 <script>
-const GEMINI_API_KEY="";  // <-- paste your Google AI Studio key here (free from aistudio.google.com)
+const GEMINI_API_KEY="";  // <-- এখানে Google AI Studio key বসাও (aistudio.google.com থেকে ফ্রি)
 const GEMINI_MODEL="gemini-2.5-flash";
 async function askGemini(name){
-const prompt=`You are a fun, witty name-reading app used for viral share cards. For the name "${name}", invent a delightful reading. Reply ONLY with valid minified JSON, no markdown fences: {"meaning":"one short line about the name's origin or legendary meaning, max 90 chars","arch":"funny persona title starting with The, 2-4 words","traits":["short trait","short trait","short trait"],"super":"hidden superpower, max 60 chars","funny":"funny truth bomb about people with this name, max 80 chars","vibe":"2-4 word vibe including one emoji","lucky":a number 1-99}`;
+const prompt=`তুমি একটা মজার name-reading অ্যাপ, ভাইরাল শেয়ার কার্ডের জন্য। "${name}" নামটার জন্য মজার একটা পড়া বানাও। সব টেক্সট বাংলায় লেখো (persona title-এ ১-২টা ইংরেজি শব্দ থাকতে পারে)। শুধু valid minified JSON রিপ্লাই দাও, markdown fence ছাড়া: {"meaning":"নামটার আসল বা কিংবদন্তি অর্থ, এক লাইন, সর্বোচ্চ ৯০ অক্ষর","arch":"মজার পার্সোনা টাইটেল, The দিয়ে শুরু, ২-৪ শব্দ","traits":["ছোট ট্রেইট","ছোট ট্রেইট","ছোট ট্রেইট"],"super":"লুকানো সুপারপাওয়ার, সর্বোচ্চ ৬০ অক্ষর","funny":"এই নামের মানুষদের নিয়ে মজার সত্য বোমা, সর্বোচ্চ ৮০ অক্ষর","vibe":"২-৪ শব্দের ভাইব, একটা ইমোজি সহ","lucky":1 থেকে 99 এর মধ্যে একটা সংখ্যা}`;
 const res=await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent?key=${GEMINI_API_KEY}`,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({contents:[{parts:[{text:prompt}]}]})});
 const j=await res.json();
 return JSON.parse(j.candidates[0].content.parts[0].text.replace(/```json|```/g,"").trim());
 }
-const LETTERS={A:"Adventurous",B:"Brave",C:"Charming",D:"Determined",E:"Energetic",F:"Fun-loving",G:"Generous",H:"Honest",I:"Imaginative",J:"Jolly",K:"Kind",L:"Loyal",M:"Magnetic",N:"Noble",O:"Optimistic",P:"Playful",Q:"Quick-witted",R:"Radiant",S:"Sincere",T:"Thoughtful",U:"Unique",V:"Vibrant",W:"Wise",X:"eXtra special",Y:"Youthful",Z:"Zealous"};
-const ARCH=["The Midnight Genius","The Chaos Coordinator","The Human Sunshine","The Silent Mastermind","The Snacktime Legend","The Vibe Architect","The Plot Twist Person","The Certified Overthinker","The Main Character","The Sleepless Dreamer","The Unlimited Motivation Machine"];
-const TRAITS=["Natural-born leader (of naps)","Loyal to exactly 3 people","Walks into rooms like a plot twist","Sarcasm level: 9000","Secretly the funniest in the group","Motivated only by food","Chaotic good energy","Remembers everything from 2019","Cries at dog videos","Zero excuses, pure action","Plans everything, follows nothing","Shy until comfortable, then unstoppable"];
-const SUPER=["Can find snacks in any house","Never loses at Rock-Paper-Scissors","Instantly befriended by all animals","Turns any bad day into a fun one","Predicts plot twists before anyone","Falls asleep anywhere in under 5 min","Makes anyone laugh at the worst time","Remembers faces for 10 years","Talks their way out of anything","Runs on 4 hours of sleep"];
-const FUNNY=["You say '5 more minutes' and mean 2 hours","You pretend to be asleep to avoid talking","You text 'lol' with a completely dead face","You plan your comeback 3 days too late","You are 90% snack, 10% mystery","Your bed is your true soulmate","You give great advice and never take it","You rehearse conversations that never happen"];
-const VIBES=["🔥 Main Character Energy","💫 Soft but Dangerous","🌙 Midnight Thinker","⚡ Pure Lightning","🦋 Calm Chaos","🌟 Gentle Power","🧿 Lucky Aura","🚀 Unstoppable"];
+const LETTERS={A:"সাহসী",B:"বীর",C:"আকর্ষণীয়",D:"দৃঢ়প্রতিজ্ঞ",E:"কর্মচৌকস",F:"মজাপ্রেমী",G:"দানশীল",H:"সৎ",I:"কল্পনাপ্রিয়",J:"রঙিন",K:"দয়ালু",L:"অনুগত",M:"ম্যাগনেটিক",N:"মহৎ",O:"আশাবাদী",P:"খেলাপ্রিয়",Q:"তীক্ষ্ণ বুদ্ধি",R:"উজ্জ্বল",S:"আন্তরিক",T:"ভাবুক",U:"স্বতন্ত্র",V:"প্রাণবন্ত",W:"জ্ঞানী",X:"অসাধারণ",Y:"তারুণ্যপূর্ণ",Z:"উদ্যমী"};
+const ARCH=["মধ্যরাতের জিনিয়াস","কনফিউশন কোঅর্ডিনেটর","হিউম্যান সানশাইন","সাইলেন্ট মাস্টারমাইন্ড","স্ন্যাক টাইম লেজেন্ড","ভাইব আর্কিটেক্ট","প্লট টুইস্ট মানুষ","সার্টিফাইড ওভারথিংকার","মেইন ক্যারেক্টার","ঘুমহীন স্বপ্নবিদ","আনলিমিটেড মোটিভেশন মেশিন"];
+const TRAITS=["ঘুমের দলের নেতা","মাত্র ৩ জনের প্রতি পূর্ণ বিশ্বস্ত","ঘরে ঢুকলেই প্লট টুইস্ট","সারকাজম লেভেল: ৯০০০","গ্রুপের লুকানো কমেডিয়ান","খাবার ছাড়া মোটিভেশন নাই","কাওয়াই গুড এনার্জি","২০১৯ সালের কথাও মনে রাখে","কুকুরের ভিডিও দেখে কাঁদে","কোনো বাহানা নাই, শুধু অ্যাকশন","সব প্ল্যান করে, কিছুই ফলো করে না","লজ্জাপ্রবণ, পরিচিত হলে থামানো যায় না"];
+const SUPER=["যেকোনো বাসায় খাবার খুঁজে বের করতে পারে","কাগজ-কাঁচি-খেলায় কখনো হারে না","সব পশু সাথে সাথে বন্ধু হয়ে যায়","খারাপ দিনকেও মজার বানিয়ে দেয়","প্লট টুইস্ট আগেই ধরে ফেলে","যেকোনো জায়গায় ৫ মিনিটে ঘুমিয়ে পড়ে","সবচেয়ে ভুল সময়েও সবাইকে হাসায়","১০ বছর পরেও মানুষ চিনে ফেলে","কথার জাদুতে সব গোছিয়ে ফেলে","৪ ঘণ্টা ঘুমে ২৪ ঘণ্টা চলে"];
+const FUNNY=["'আরও ৫ মিনিট' মানে আরও ২ ঘণ্টা","কথা বাঁচাতে ঘুমানোর নাটক করে","'লজ' লেখে, মুখে একদম মৃত ভাব","রিপ্লাই মাথায় আসে ৩ দিন পরে","৯০% নাস্তা, ১০% রহস্য","বিছানাই তার সবচেয়ে ভালো বন্ধু","সবাইকে ভালো উপদেশ দেয়, নিজে নেয় না","যে কথা হবেই না, সেটার রিহার্সাল করে"];
+const VIBES=["🔥 মেইন ক্যারেক্টার এনার্জি","💫 নরম কিন্তু বিপজ্জনক","🌙 মধ্যরাতের চিন্তাবিদ","⚡ খাঁটি বিদ্যুৎ","🦋 শান্ত কাওয়াই","🌟 কোমল শক্তি","🧿 লাকি অরা","🚀 থামানো যায় না"];
 const PALETTES=[["#ff9a9e","#fecfef"],["#a18cd1","#fbc2eb"],["#ffecd2","#fcb69f"],["#84fab0","#8fd3f4"],["#fccb90","#d57eeb"],["#e0c3fc","#8ec5fc"],["#f6d365","#fda085"],["#5ee7df","#b490ca"]];
 function hash(s){let h=2166136261;for(let i=0;i<s.length;i++){h^=s.charCodeAt(i);h=Math.imul(h,16777619)}return h>>>0}
 function rng(seed){return function(){seed=(seed*1664525+1013904223)>>>0;return seed/4294967296}}
@@ -77,21 +77,20 @@ let LAST=null;
 const wait=(ms)=>new Promise(r=>setTimeout(r,ms));
 async function go(){
 const name=nameInput.value.trim();
-if(!name){toast("Type your name first! 🙂");return}
+if(!name){toast("আগে নামটা লিখো 🙂");return}
 loader.style.display="block";result.style.display="none";
-const texts=["Reading the stars...","Decoding your name...","Consulting the vibe council...","Almost there..."];
+const texts=["তারা পড়া হচ্ছে...","নামের কোড ভাঙা হচ্ছে...","ভাইব কাউন্সিলের মতামত নেওয়া হচ্ছে...","প্রায় হয়ে গেছে..."];
 for(let i=0;i<texts.length;i++){loadText.textContent=texts[i];await wait(450)}
 let api={};
 try{
 const r=await Promise.race([Promise.all([
 fetch("https://api.agify.io/?name="+encodeURIComponent(name)).then(x=>x.json()),
-fetch("https://api.genderize.io/?name="+encodeURIComponent(name)).then(x=>x.json()),
 fetch("https://api.nationalize.io/?name="+encodeURIComponent(name)).then(x=>x.json())]),wait(3500).then(()=>[])]);
-if(r.length===3){api={age:r[0].age,gender:r[1].gender,prob:r[1].probability,country:(r[2].country&&r[2].country[0])?r[2].country[0].country_id:null}}
+if(r.length===2){api={age:r[0].age,country:(r[1].country&&r[1].country[0])?r[1].country[0].country_id:null}}
 }catch(e){}
 const h=hash(name.toLowerCase()),rand=rng(h);
 const pick=(arr)=>arr[Math.floor(rand()*arr.length)];
-const letters=name.toUpperCase().replace(/[^A-Z]/g,"").slice(0,7).split("").map(c=>({c,m:LETTERS[c]}));
+const letters=name.toUpperCase().replace(/[^A-Z]/g,"").slice(0,8).split("").map(c=>({c,m:LETTERS[c]}));
 let ai=null;
 if(GEMINI_API_KEY){try{ai=await askGemini(name)}catch(e){}}
 let traits=[pick(TRAITS),pick(TRAITS),pick(TRAITS)].filter((v,i,a)=>a.indexOf(v)===i);
@@ -102,40 +101,45 @@ loader.style.display="none";result.style.display="block";
 result.scrollIntoView({behavior:"smooth"});
 }
 function rr(ctx,x,y,w,h,r){ctx.beginPath();ctx.moveTo(x+r,y);ctx.arcTo(x+w,y,x+w,y+h,r);ctx.arcTo(x+w,y+h,x,y+h,r);ctx.arcTo(x,y+h,x,y,r);ctx.arcTo(x,y,x+w,y,r);ctx.closePath()}
+function fitFont(ctx,text,weight,size,face,maxW){let fs=size;ctx.font=weight+" "+fs+"px "+face;while(ctx.measureText(text).width>maxW&&fs>36){fs-=5;ctx.font=weight+" "+fs+"px "+face}return fs}
 async function drawCard(d){
-await document.fonts.ready;
+try{await document.fonts.load("700 40px 'Hind Siliguri'","অ");await document.fonts.load("700 40px Fredoka","A");await document.fonts.ready}catch(e){}
 const cv=document.getElementById("card"),ctx=cv.getContext("2d");
-const g=ctx.createLinearGradient(0,0,1080,1350);g.addColorStop(0,d.palette[0]);g.addColorStop(1,d.palette[1]);
-ctx.fillStyle=g;ctx.fillRect(0,0,1080,1350);
-ctx.fillStyle="rgba(255,255,255,.16)";ctx.beginPath();ctx.arc(920,120,220,0,7);ctx.fill();ctx.beginPath();ctx.arc(120,1240,180,0,7);ctx.fill();
+const BH=380+(d.letters.length?d.letters.length*60+56:0);
+const CH=Math.max(1350,BH+100+130+d.traits.length*64+44+62+96+150+150+110);
+cv.width=1080;cv.height=CH;
+const g=ctx.createLinearGradient(0,0,1080,CH);g.addColorStop(0,d.palette[0]);g.addColorStop(1,d.palette[1]);
+ctx.fillStyle=g;ctx.fillRect(0,0,1080,CH);
+ctx.fillStyle="rgba(255,255,255,.16)";ctx.beginPath();ctx.arc(920,120,220,0,7);ctx.fill();ctx.beginPath();ctx.arc(120,CH-110,180,0,7);ctx.fill();
 ctx.textAlign="center";
-ctx.fillStyle="rgba(0,0,0,.55)";ctx.font="600 40px Poppins";ctx.fillText("✨ THE NAME REPORT ✨",540,110);
-ctx.fillStyle="rgba(0,0,0,.85)";ctx.font="700 110px Fredoka, Poppins";ctx.fillText(d.name.toUpperCase(),540,250);
-ctx.font="600 44px Poppins";ctx.fillStyle="rgba(0,0,0,.6)";ctx.fillText(d.meaning||d.arch,540,330);
-let y=450;
-ctx.fillStyle="rgba(0,0,0,.5)";ctx.font="700 36px Poppins";ctx.fillText("YOUR NAME, LETTER BY LETTER",540,y);
-d.letters.forEach(L=>{y+=60;ctx.fillStyle="rgba(255,255,255,.9)";rr(ctx,120,y-46,840,58,29);ctx.fill();ctx.fillStyle="#1b1035";ctx.font="700 40px Fredoka, Poppins";ctx.textAlign="left";ctx.fillText(L.c,165,y-8);ctx.font="500 34px Poppins";ctx.fillText(L.m,240,y-6);ctx.textAlign="center"});
-y+=100;
-ctx.fillStyle="rgba(0,0,0,.55)";ctx.font="700 36px Poppins";ctx.fillText("YOUR VIBE: "+d.vibe,540,y);y+=62;
-d.traits.forEach(t=>{ctx.fillStyle="rgba(255,255,255,.55)";rr(ctx,120,y-44,840,54,27);ctx.fill();ctx.fillStyle="#1b1035";ctx.font="600 32px Poppins";ctx.fillText("• "+t,540,y-8);y+=64});
+ctx.fillStyle="rgba(0,0,0,.55)";ctx.font="600 40px 'Hind Siliguri', Poppins";ctx.fillText("✨ নাম রিপোর্ট ✨",540,110);
+const nfs=fitFont(ctx,d.name,"700",104,"Fredoka, 'Hind Siliguri', Poppins",900);
+ctx.fillStyle="rgba(0,0,0,.85)";ctx.font="700 "+nfs+"px Fredoka, 'Hind Siliguri', Poppins";ctx.fillText(d.name,540,250);
+ctx.font="600 42px 'Hind Siliguri', Poppins";ctx.fillStyle="rgba(0,0,0,.6)";ctx.fillText(d.meaning||("পার্সোনা: "+d.arch),540,330);
+let y=BH+20;
+ctx.fillStyle="rgba(0,0,0,.5)";ctx.font="700 36px 'Hind Siliguri', Poppins";ctx.fillText("তোমার নাম, অক্ষরে অক্ষর",540,y);
+d.letters.forEach(L=>{y+=60;ctx.fillStyle="rgba(255,255,255,.9)";rr(ctx,120,y-46,840,58,29);ctx.fill();ctx.fillStyle="#1b1035";ctx.textAlign="left";ctx.font="700 38px Fredoka, 'Hind Siliguri', Poppins";ctx.fillText(L.c,165,y-8);ctx.font="500 32px 'Hind Siliguri', Poppins";ctx.fillText(L.m,240,y-6);ctx.textAlign="center"});
+y+=96;
+ctx.fillStyle="rgba(0,0,0,.55)";ctx.font="700 36px 'Hind Siliguri', Poppins";ctx.fillText("তোমার ভাইব: "+d.vibe,540,y);y+=62;
+d.traits.forEach(t=>{ctx.fillStyle="rgba(255,255,255,.55)";rr(ctx,120,y-44,840,54,27);ctx.fill();ctx.fillStyle="#1b1035";ctx.font="600 30px 'Hind Siliguri', Poppins";ctx.fillText("• "+t,540,y-8);y+=64});
 y+=44;
-ctx.fillStyle="rgba(0,0,0,.6)";ctx.font="700 40px Fredoka, Poppins";ctx.fillText("😂 TRUTH BOMB",540,y);y+=62;
-ctx.fillStyle="rgba(0,0,0,.82)";rr(ctx,110,y-52,860,96,24);ctx.fill();ctx.fillStyle="#fff";ctx.font="600 34px Poppins";ctx.fillText('"'+d.funny+'"',540,y+4);y+=150;
-ctx.fillStyle="rgba(0,0,0,.5)";ctx.font="600 34px Poppins";
-let facts="🍀 Lucky number: "+d.lucky;
-if(d.api&&d.api.age)facts+="   ·   Common age: "+d.api.age;
+ctx.fillStyle="rgba(0,0,0,.6)";ctx.font="700 40px 'Hind Siliguri', Poppins";ctx.fillText("😂 সত্য বোমা",540,y);y+=62;
+ctx.fillStyle="rgba(0,0,0,.82)";rr(ctx,90,y-56,900,100,24);ctx.fill();ctx.fillStyle="#fff";ctx.font="600 34px 'Hind Siliguri', Poppins";ctx.fillText('"'+d.funny+'"',540,y+6);y+=170;
+ctx.fillStyle="rgba(0,0,0,.5)";ctx.font="600 34px 'Hind Siliguri', Poppins";
+let facts="🍀 লাকি নাম্বার: "+d.lucky;
+if(d.api&&d.api.age)facts+="   ·   কমন বয়স: "+d.api.age;
 ctx.fillText(facts,540,y);y+=54;
-if(d.api&&d.api.country)ctx.fillText("🌍 Most popular in: "+d.api.country,540,y);
-ctx.fillStyle="rgba(0,0,0,.45)";ctx.font="600 30px Poppins";ctx.fillText("made with NameAura",540,1310);
+if(d.api&&d.api.country)ctx.fillText("🌍 সবচেয়ে জনপ্রিয়: "+d.api.country,540,y);
+ctx.fillStyle="rgba(0,0,0,.45)";ctx.font="600 30px 'Hind Siliguri', Poppins";ctx.fillText("made with NameAura",540,CH-50);
 }
-function downloadCard(){if(!LAST)return;const a=document.createElement("a");a.download=LAST.name.replace(/\s+/g,"_")+"_nameaura.png";a.href=document.getElementById("card").toDataURL("image/png");a.click();toast("Card downloaded 💾")}
+function downloadCard(){if(!LAST)return;const a=document.createElement("a");a.download=LAST.name.replace(/\s+/g,"_")+"_nameaura.png";a.href=document.getElementById("card").toDataURL("image/png");a.click();toast("কার্ড ডাউনলোড হলো 💾")}
 async function shareCard(){
 if(!LAST)return;
 const cv=document.getElementById("card");
 try{
 const blob=await new Promise(r=>cv.toBlob(r,"image/png"));
 const file=new File([blob],LAST.name+"_nameaura.png",{type:"image/png"});
-if(navigator.canShare&&navigator.canShare({files:[file]})){await navigator.share({files:[file],title:"My NameAura card ✨"});return}
+if(navigator.canShare&&navigator.canShare({files:[file]})){await navigator.share({files:[file],title:"আমার NameAura কার্ড ✨"});return}
 }catch(e){}
 downloadCard();
 }
