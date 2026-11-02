@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NameAura - What does your name say about you?</title>
+<meta name="description" content="Type your name and get a beautiful shareable card: your name's letter meaning, personality, hidden superpower and a funny truth.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{font-family:'Poppins',sans-serif;background:linear-gradient(160deg,#1b1035 0%,#2d1b69 45%,#0f3461 100%);min-height:100vh;color:#fff;display:flex;flex-direction:column;align-items:center;padding:24px 16px 60px}
+.hero{text-align:center;margin-top:24px}
+.hero h1{font-family:'Fredoka',sans-serif;font-size:clamp(34px,8vw,54px);line-height:1.1;background:linear-gradient(90deg,#ffd86f,#fc8f5e,#ff6fb0,#8f7bff);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.hero p{margin-top:10px;color:#cfc8f5;font-size:15px}
+.card-input{margin-top:28px;display:flex;gap:10px;width:100%;max-width:440px}
+.card-input input{flex:1;padding:16px 20px;border-radius:16px;border:none;font-size:17px;font-family:'Poppins',sans-serif;background:rgba(255,255,255,.95);color:#222;outline:none;box-shadow:0 8px 30px rgba(0,0,0,.35)}
+.card-input button{padding:16px 22px;border:none;border-radius:16px;font-size:16px;font-weight:700;font-family:'Poppins',sans-serif;background:linear-gradient(90deg,#ff6fb0,#8f7bff);color:#fff;cursor:pointer;box-shadow:0 8px 30px rgba(143,123,255,.45);transition:transform .15s}
+.card-input button:active{transform:scale(.96)}
+.hint{margin-top:12px;color:#9a8fd0;font-size:13px}
+.loader{display:none;margin-top:36px;text-align:center}
+.loader .spin{width:46px;height:46px;border-radius:50%;border:4px solid rgba(255,255,255,.2);border-top-color:#ffd86f;animation:sp 1s linear infinite;margin:0 auto}
+@keyframes sp{to{transform:rotate(360deg)}}
+.loader p{margin-top:12px;color:#cfc8f5;font-size:14px}
+#result{display:none;width:100%;max-width:520px;margin-top:34px;text-align:center}
+#canvasWrap{border-radius:20px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.5)}
+canvas{width:100%;height:auto;display:block}
+.actions{display:flex;gap:12px;margin-top:20px}
+.actions button{flex:1;padding:16px 10px;border:none;border-radius:16px;font-size:15px;font-weight:700;font-family:'Poppins',sans-serif;cursor:pointer}
+#shareBtn{background:linear-gradient(90deg,#22c55e,#16a34a);color:#fff}
+#dlBtn{background:rgba(255,255,255,.12);color:#fff}
+.again{margin-top:14px;color:#9a8fd0;font-size:14px;cursor:pointer;text-decoration:underline}
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#22c55e;color:#fff;padding:12px 22px;border-radius:12px;font-size:14px;font-weight:600;opacity:0;transition:opacity .3s;pointer-events:none}
+footer{margin-top:auto;padding-top:44px;color:#7f74b8;font-size:12px;text-align:center}
+</style>
+</head>
+<body>
+<div class="hero">
+<h1>✨ NameAura</h1>
+<p>What does YOUR name secretly say about you?</p>
+</div>
+<div class="card-input">
+<input id="nameInput" placeholder="Type your name..." maxlength="20" autocomplete="off">
+<button onclick="go()">Reveal ✨</button>
+</div>
+<div class="hint">Free · No signup · Instant shareable card</div>
+<div class="loader" id="loader"><div class="spin"></div><p id="loadText">Reading the stars...</p></div>
+<div id="result">
+<div id="canvasWrap"><canvas id="card" width="1080" height="1350"></canvas></div>
+<div class="actions">
+<button id="shareBtn" onclick="shareCard()">Share Card</button>
+<button id="dlBtn" onclick="downloadCard()">Download</button>
+</div>
+<div class="again" onclick="reset()">Try another name</div>
+</div>
+<footer>NameAura · your name, your story 💜</footer>
+<div class="toast" id="toast"></div>
+<script>
+const GEMINI_API_KEY="";  // <-- paste your Google AI Studio key here (free from aistudio.google.com)
+const GEMINI_MODEL="gemini-2.5-flash";
+async function askGemini(name){
+const prompt=`You are a fun, witty name-reading app used for viral share cards. For the name "${name}", invent a delightful reading. Reply ONLY with valid minified JSON, no markdown fences: {"meaning":"one short line about the name's origin or legendary meaning, max 90 chars","arch":"funny persona title starting with The, 2-4 words","traits":["short trait","short trait","short trait"],"super":"hidden superpower, max 60 chars","funny":"funny truth bomb about people with this name, max 80 chars","vibe":"2-4 word vibe including one emoji","lucky":a number 1-99}`;
+const res=await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent?key=${GEMINI_API_KEY}`,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({contents:[{parts:[{text:prompt}]}]})});
+const j=await res.json();
+return JSON.parse(j.candidates[0].content.parts[0].text.replace(/```json|```/g,"").trim());
+}
+const LETTERS={A:"Adventurous",B:"Brave",C:"Charming",D:"Determined",E:"Energetic",F:"Fun-loving",G:"Generous",H:"Honest",I:"Imaginative",J:"Jolly",K:"Kind",L:"Loyal",M:"Magnetic",N:"Noble",O:"Optimistic",P:"Playful",Q:"Quick-witted",R:"Radiant",S:"Sincere",T:"Thoughtful",U:"Unique",V:"Vibrant",W:"Wise",X:"eXtra special",Y:"Youthful",Z:"Zealous"};
+const ARCH=["The Midnight Genius","The Chaos Coordinator","The Human Sunshine","The Silent Mastermind","The Snacktime Legend","The Vibe Architect","The Plot Twist Person","The Certified Overthinker","The Main Character","The Sleepless Dreamer","The Unlimited Motivation Machine"];
+const TRAITS=["Natural-born leader (of naps)","Loyal to exactly 3 people","Walks into rooms like a plot twist","Sarcasm level: 9000","Secretly the funniest in the group","Motivated only by food","Chaotic good energy","Remembers everything from 2019","Cries at dog videos","Zero excuses, pure action","Plans everything, follows nothing","Shy until comfortable, then unstoppable"];
+const SUPER=["Can find snacks in any house","Never loses at Rock-Paper-Scissors","Instantly befriended by all animals","Turns any bad day into a fun one","Predicts plot twists before anyone","Falls asleep anywhere in under 5 min","Makes anyone laugh at the worst time","Remembers faces for 10 years","Talks their way out of anything","Runs on 4 hours of sleep"];
+const FUNNY=["You say '5 more minutes' and mean 2 hours","You pretend to be asleep to avoid talking","You text 'lol' with a completely dead face","You plan your comeback 3 days too late","You are 90% snack, 10% mystery","Your bed is your true soulmate","You give great advice and never take it","You rehearse conversations that never happen"];
+const VIBES=["🔥 Main Character Energy","💫 Soft but Dangerous","🌙 Midnight Thinker","⚡ Pure Lightning","🦋 Calm Chaos","🌟 Gentle Power","🧿 Lucky Aura","🚀 Unstoppable"];
+const PALETTES=[["#ff9a9e","#fecfef"],["#a18cd1","#fbc2eb"],["#ffecd2","#fcb69f"],["#84fab0","#8fd3f4"],["#fccb90","#d57eeb"],["#e0c3fc","#8ec5fc"],["#f6d365","#fda085"],["#5ee7df","#b490ca"]];
+function hash(s){let h=2166136261;for(let i=0;i<s.length;i++){h^=s.charCodeAt(i);h=Math.imul(h,16777619)}return h>>>0}
+function rng(seed){return function(){seed=(seed*1664525+1013904223)>>>0;return seed/4294967296}}
+let LAST=null;
+const wait=(ms)=>new Promise(r=>setTimeout(r,ms));
+async function go(){
+const name=nameInput.value.trim();
+if(!name){toast("Type your name first! 🙂");return}
+loader.style.display="block";result.style.display="none";
+const texts=["Reading the stars...","Decoding your name...","Consulting the vibe council...","Almost there..."];
+for(let i=0;i<texts.length;i++){loadText.textContent=texts[i];await wait(450)}
+let api={};
+try{
+const r=await Promise.race([Promise.all([
+fetch("https://api.agify.io/?name="+encodeURIComponent(name)).then(x=>x.json()),
+fetch("https://api.genderize.io/?name="+encodeURIComponent(name)).then(x=>x.json()),
+fetch("https://api.nationalize.io/?name="+encodeURIComponent(name)).then(x=>x.json())]),wait(3500).then(()=>[])]);
+if(r.length===3){api={age:r[0].age,gender:r[1].gender,prob:r[1].probability,country:(r[2].country&&r[2].country[0])?r[2].country[0].country_id:null}}
+}catch(e){}
+const h=hash(name.toLowerCase()),rand=rng(h);
+const pick=(arr)=>arr[Math.floor(rand()*arr.length)];
+const letters=name.toUpperCase().replace(/[^A-Z]/g,"").slice(0,7).split("").map(c=>({c,m:LETTERS[c]}));
+let ai=null;
+if(GEMINI_API_KEY){try{ai=await askGemini(name)}catch(e){}}
+let traits=[pick(TRAITS),pick(TRAITS),pick(TRAITS)].filter((v,i,a)=>a.indexOf(v)===i);
+if(ai&&ai.traits)traits=ai.traits.slice(0,3);
+LAST={name,letters,meaning:ai?ai.meaning:null,arch:(ai&&ai.arch)||pick(ARCH),traits,super:(ai&&ai.super)||pick(SUPER),funny:(ai&&ai.funny)||pick(FUNNY),vibe:(ai&&ai.vibe)||pick(VIBES),lucky:(ai&&ai.lucky)||(1+Math.floor(rand()*98)),palette:pick(PALETTES),api};
+drawCard(LAST);
+loader.style.display="none";result.style.display="block";
+result.scrollIntoView({behavior:"smooth"});
+}
+function rr(ctx,x,y,w,h,r){ctx.beginPath();ctx.moveTo(x+r,y);ctx.arcTo(x+w,y,x+w,y+h,r);ctx.arcTo(x+w,y+h,x,y+h,r);ctx.arcTo(x,y+h,x,y,r);ctx.arcTo(x,y,x+w,y,r);ctx.closePath()}
+async function drawCard(d){
+await document.fonts.ready;
+const cv=document.getElementById("card"),ctx=cv.getContext("2d");
+const g=ctx.createLinearGradient(0,0,1080,1350);g.addColorStop(0,d.palette[0]);g.addColorStop(1,d.palette[1]);
+ctx.fillStyle=g;ctx.fillRect(0,0,1080,1350);
+ctx.fillStyle="rgba(255,255,255,.16)";ctx.beginPath();ctx.arc(920,120,220,0,7);ctx.fill();ctx.beginPath();ctx.arc(120,1240,180,0,7);ctx.fill();
+ctx.textAlign="center";
+ctx.fillStyle="rgba(0,0,0,.55)";ctx.font="600 40px Poppins";ctx.fillText("✨ THE NAME REPORT ✨",540,110);
+ctx.fillStyle="rgba(0,0,0,.85)";ctx.font="700 110px Fredoka, Poppins";ctx.fillText(d.name.toUpperCase(),540,250);
+ctx.font="600 44px Poppins";ctx.fillStyle="rgba(0,0,0,.6)";ctx.fillText(d.meaning||d.arch,540,330);
+let y=450;
+ctx.fillStyle="rgba(0,0,0,.5)";ctx.font="700 36px Poppins";ctx.fillText("YOUR NAME, LETTER BY LETTER",540,y);
+d.letters.forEach(L=>{y+=60;ctx.fillStyle="rgba(255,255,255,.9)";rr(ctx,120,y-46,840,58,29);ctx.fill();ctx.fillStyle="#1b1035";ctx.font="700 40px Fredoka, Poppins";ctx.textAlign="left";ctx.fillText(L.c,165,y-8);ctx.font="500 34px Poppins";ctx.fillText(L.m,240,y-6);ctx.textAlign="center"});
+y+=100;
+ctx.fillStyle="rgba(0,0,0,.55)";ctx.font="700 36px Poppins";ctx.fillText("YOUR VIBE: "+d.vibe,540,y);y+=62;
+d.traits.forEach(t=>{ctx.fillStyle="rgba(255,255,255,.55)";rr(ctx,120,y-44,840,54,27);ctx.fill();ctx.fillStyle="#1b1035";ctx.font="600 32px Poppins";ctx.fillText("• "+t,540,y-8);y+=64});
+y+=44;
+ctx.fillStyle="rgba(0,0,0,.6)";ctx.font="700 40px Fredoka, Poppins";ctx.fillText("😂 TRUTH BOMB",540,y);y+=62;
+ctx.fillStyle="rgba(0,0,0,.82)";rr(ctx,110,y-52,860,96,24);ctx.fill();ctx.fillStyle="#fff";ctx.font="600 34px Poppins";ctx.fillText('"'+d.funny+'"',540,y+4);y+=150;
+ctx.fillStyle="rgba(0,0,0,.5)";ctx.font="600 34px Poppins";
+let facts="🍀 Lucky number: "+d.lucky;
+if(d.api&&d.api.age)facts+="   ·   Common age: "+d.api.age;
+ctx.fillText(facts,540,y);y+=54;
+if(d.api&&d.api.country)ctx.fillText("🌍 Most popular in: "+d.api.country,540,y);
+ctx.fillStyle="rgba(0,0,0,.45)";ctx.font="600 30px Poppins";ctx.fillText("made with NameAura",540,1310);
+}
+function downloadCard(){if(!LAST)return;const a=document.createElement("a");a.download=LAST.name.replace(/\s+/g,"_")+"_nameaura.png";a.href=document.getElementById("card").toDataURL("image/png");a.click();toast("Card downloaded 💾")}
+async function shareCard(){
+if(!LAST)return;
+const cv=document.getElementById("card");
+try{
+const blob=await new Promise(r=>cv.toBlob(r,"image/png"));
+const file=new File([blob],LAST.name+"_nameaura.png",{type:"image/png"});
+if(navigator.canShare&&navigator.canShare({files:[file]})){await navigator.share({files:[file],title:"My NameAura card ✨"});return}
+}catch(e){}
+downloadCard();
+}
+function reset(){result.style.display="none";nameInput.value="";nameInput.focus();window.scrollTo({top:0,behavior:"smooth"})}
+function toast(msg){const t=document.getElementById("toast");t.textContent=msg;t.style.opacity=1;setTimeout(()=>t.style.opacity=0,1800)}
+nameInput.addEventListener("keydown",e=>{if(e.key==="Enter")go()});
+</script>
+</body>
+</html>
